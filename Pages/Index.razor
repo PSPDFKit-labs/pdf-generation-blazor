@@ -1,0 +1,15 @@
+﻿@page "/"
+@inject IJSRuntime JSRuntime
+
+<h3>PDF Generator</h3>
+
+<button class="btn btn-primary" @onclick="DownloadPdf">Download PDF</button>
+
+@code {
+    private async Task DownloadPdf()
+    {
+        byte[] pdfBytes = PdfGenerator.CreatePdf();
+        var fileName = "GeneratedPdf.pdf";
+        await JSRuntime.InvokeVoidAsync("saveAsFile", fileName, Convert.ToBase64String(pdfBytes));
+    }
+}
